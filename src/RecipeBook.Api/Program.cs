@@ -1,3 +1,6 @@
+using RecipeBook.ServiceLibrary.Data;
+using RecipeBook.ServiceLibrary.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// DI for service library
+builder.Services.AddSingleton<IDbConnectionFactory, SqlConnectionFactory>();
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 
 var app = builder.Build();
 

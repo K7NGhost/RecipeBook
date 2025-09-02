@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RecipeBook.ServiceLibrary.Domains;
 using RecipeBook.ServiceLibrary.Entities;
 
+// What the client interacts with using HTTP instructions
 namespace RecipeBook.Api.Controllers
 {
     [Route("api/[controller]")]

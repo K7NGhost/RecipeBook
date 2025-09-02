@@ -11,7 +11,7 @@ namespace RecipeBook.ServiceLibrary.Domains
         public void SaveRecipe(RecipeEntity recipeEntity)
         {
             // Validate some stuff
-            var dataAccess = new RecipeRepository();
+            //var dataAccess = new RecipeRepository();
         }
     }
 }
