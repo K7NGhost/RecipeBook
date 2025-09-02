@@ -1,0 +1,20 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using RecipeBook.ServiceLibrary.Domains;
+using RecipeBook.ServiceLibrary.Entities;
+
+namespace RecipeBook.Api.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class RecipeController : ControllerBase
+    {
+        public IActionResult AddNewRecipe(RecipeEntity recipeEntity)
+        {
+            var businessLogic = new Recipe();
+            businessLogic.SaveRecipe(recipeEntity);
+            return Ok();
+        }
+    }
+}
