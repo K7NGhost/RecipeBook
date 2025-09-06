@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Numerics;
 using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace RecipeBook.ServiceLibrary.Repositories
 {
@@ -15,6 +17,10 @@ namespace RecipeBook.ServiceLibrary.Repositories
     public interface IRecipeRepository
     {
         Task<int> InsertAsync(RecipeEntity entity);
+        Task<RecipeEntity?> GetByIdAsync(Guid id);
+        Task<IEnumerable<RecipeEntity>> GetAllAsync();
+        Task<int> UpdateAsync(RecipeEntity entity);
+        Task<int> DeleteAsync(Guid id);
     }
 
     // Actual manager that does CRUD operations into the database

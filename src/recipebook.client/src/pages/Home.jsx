@@ -6,13 +6,19 @@ export default function Home() {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    setRecipes(loadAll());
+      let mounted = true;
+      (async () => {
+          const data = await loadAll();
+          if (mounted) setRecipes(data);
+      })();
+      return () => { mounted = false; };
   }, []);
 
-  function handleDelete(id) {
-    if (!confirm('Delete this recipe?')) return;
-    removeRecipe(id);
-    setRecipes(loadAll());
+  async function handleDelete(id) {
+      if (!confirm('Delete this recipe?')) return;
+      await removeRecipe(id);
+      const data = await loadAll();
+      setRecipes(data);
   }
 
   return (
