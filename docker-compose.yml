@@ -5,18 +5,34 @@ services:
       context: .
       dockerfile: src/RecipeBook.Api/Dockerfile
     ports:
-        - 5400:8080
-        - 5401:8081
+      - 5400:8080
+      - 5401:8081
     depends_on:
-        - sqlserver
+      - sqlserver
+
+  recipebook.client:
+    image: node:20
+    working_dir: /src
+    volumes:
+      - ./src/RecipeBook.Client:/src
+      - /src/node_modules
+    ports:
+      - "61395:61395"
+    environment:
+      - DEV_SERVER_PORT=61395
+      - ASPNETCORE_URLS=http://recipebook.api:8080
+      - SKIP_HTTPS=true
+    depends_on:
+      - recipebook.api
+    command: sh -c "npm ci --legacy-peer-deps || npm install --legacy-peer-deps; npm run dev -- --host 0.0.0.0 --port $$DEV_SERVER_PORT"
+
   sqlserver:
     restart: unless-stopped
     image: "mcr.microsoft.com/mssql/server:2022-latest"
     environment:
-        SA_PASSWORD: "P@ssword123"
-        ACCEPT_EULA: "Y"
+      SA_PASSWORD: "P@ssword123"
+      ACCEPT_EULA: "Y"
     volumes:
-        - "./data-mssql:/var/opt/mssql/data"
+      - "./data-mssql:/var/opt/mssql/data"
     ports:
-        - 5050:1433
-    
+      - 5050:1433
